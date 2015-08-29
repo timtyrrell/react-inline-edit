@@ -30,27 +30,14 @@ class InlineEdit extends React.Component {
     editing: false
   };
 
-  renderElement = () => {
-    if(this.state.editing) {
-      return(
-        <div>
-          <input
-            type="text"
-            onKeyDown={this.keyAction}
-            defaultValue={this.state.text}
-            ref="textField" />
-        </div>
-      );
-    } else {
-      return(
-        <div onDoubleClick={this.editElement}>
-          {this.state.text}
-        </div>
-      );
-    }
+  _editElement = () => {
+    this.setState({editing: true}, () => {
+      // Focus and select all text
+      $(this.refs.textField.getDOMNode()).select();
+    });
   }
 
-  keyAction = (e) => {
+  _keyAction = (e) => {
      if(e.keyCode === 13) {
        // Enter to save
        this.setState({text: e.target.value, editing: false});
@@ -60,14 +47,27 @@ class InlineEdit extends React.Component {
      }
   }
 
-  editElement = () => {
-    this.setState({editing: true}, () => {
-      // Focus and select all text
-      $(this.refs.textField.getDOMNode()).select();
-    });
+  _renderElement = () => {
+    if(this.state.editing) {
+      return(
+        <div>
+          <input
+            type="text"
+            onKeyDown={this._keyAction}
+            defaultValue={this.state.text}
+            ref="textField" />
+        </div>
+      );
+    } else {
+      return(
+        <div onDoubleClick={this._editElement}>
+          {this.state.text}
+        </div>
+      );
+    }
   }
 
   render() {
-    return this.renderElement();
+    return this._renderElement();
   }
 }
