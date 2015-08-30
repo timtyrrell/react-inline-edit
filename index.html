@@ -5,16 +5,13 @@
     <title>Inline Edit</title>
     <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/react.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/JSXTransformer.js"></script>
     <script src="build.js"></script>
   </head>
   <body>
     <div id="content"></div>
-    <script type="text/jsx">
-      React.render(
-        <InlineContainer />,
-        document.getElementById('content')
-      );
+    <script>
+      var rootElement = React.createFactory(InlineContainer)();
+      React.render(rootElement, document.getElementById('content'));
     </script>
   </body>
 </html>
